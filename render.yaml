@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: meme-coin-aggregator
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: CACHE_TTL
+        value: 30
+      - key: LOG_LEVEL
+        value: info
+      - key: WS_UPDATE_INTERVAL
+        value: 5000
+      - key: REDIS_URL
+        fromService:
+          name: redis
+          type: redis
+          property: connectionString
+    healthCheckPath: /api/health
+
+  - type: redis
+    name: redis
+    ipAllowList: []
+    plan: free

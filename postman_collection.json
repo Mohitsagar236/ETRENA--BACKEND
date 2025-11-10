@@ -1,0 +1,264 @@
+{
+  "info": {
+    "name": "Meme Coin Aggregator API",
+    "description": "Real-time meme coin data aggregation service API collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Tokens",
+      "item": [
+        {
+          "name": "Get All Tokens",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?limit=20&sortBy=volume&sortOrder=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of tokens per page (max 100)"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "volume",
+                  "description": "Sort by: volume, price_change, market_cap, liquidity"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc",
+                  "description": "Order: asc or desc"
+                },
+                {
+                  "key": "cursor",
+                  "value": "",
+                  "description": "Pagination cursor",
+                  "disabled": true
+                },
+                {
+                  "key": "timePeriod",
+                  "value": "24h",
+                  "description": "Time period: 1h, 24h, 7d",
+                  "disabled": true
+                },
+                {
+                  "key": "minVolume",
+                  "value": "100",
+                  "description": "Minimum volume filter",
+                  "disabled": true
+                },
+                {
+                  "key": "minMarketCap",
+                  "value": "1000",
+                  "description": "Minimum market cap filter",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Fetch list of tokens with filtering, sorting, and pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Token by Address",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens/576P1t7XsRL4ZVj38LV2eYWxXRPguBADA8BxcNz1xo8y",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens", "576P1t7XsRL4ZVj38LV2eYWxXRPguBADA8BxcNz1xo8y"]
+            },
+            "description": "Get specific token details by address"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tokens - Sort by Price Change",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?sortBy=price_change&timePeriod=1h&sortOrder=desc&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "sortBy",
+                  "value": "price_change"
+                },
+                {
+                  "key": "timePeriod",
+                  "value": "1h"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get top gainers in the last hour"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tokens - With Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?minVolume=500&minMarketCap=1000&sortBy=market_cap&sortOrder=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "minVolume",
+                  "value": "500"
+                },
+                {
+                  "key": "minMarketCap",
+                  "value": "1000"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "market_cap"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                }
+              ]
+            },
+            "description": "Get tokens with volume > 500 and market cap > 1000"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tokens - Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?limit=10&cursor=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "cursor",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get next page of tokens using cursor"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "health"]
+            },
+            "description": "Check system health and status"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Metrics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/metrics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "metrics"]
+            },
+            "description": "Get aggregated token metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Cache",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cache/refresh",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cache", "refresh"]
+            },
+            "description": "Manually refresh the token cache"
+          },
+          "response": []
+        },
+        {
+          "name": "Root Endpoint",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            },
+            "description": "Get API information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Performance Tests",
+      "item": [
+        {
+          "name": "Rapid Fire - 10 Requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Make rapid requests to test caching and response times"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
