@@ -6,8 +6,27 @@ A high-performance, real-time data aggregation service that fetches, merges, and
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## 📋 Table of Contents
+## 🌐 Live Demo
 
+> **� Deployed on Railway**
+
+- **API Base URL**: `https://your-app.railway.app` _(Update after deployment)_
+- **Health Check**: `https://your-app.railway.app/api/health`
+- **API Docs**: `https://your-app.railway.app/api/tokens`
+- **WebSocket**: `wss://your-app.railway.app`
+
+### Quick Test:
+```bash
+# Test health endpoint
+curl https://your-app.railway.app/api/health
+
+# Get tokens
+curl "https://your-app.railway.app/api/tokens?limit=10&sortBy=volume"
+```
+
+## �📋 Table of Contents
+
+- [Live Demo](#live-demo)
 - [Features](#features)
 - [Architecture](#architecture)
 - [Installation](#installation)
@@ -401,41 +420,88 @@ npm test -- --coverage
 
 ## 🚀 Deployment
 
+### Quick Deploy to Railway (Recommended)
+
+**Option 1: Via Railway Dashboard (No CLI needed)**
+
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Deploy to Railway"
+   git push origin main
+   ```
+
+2. **Deploy on Railway**
+   - Go to [Railway](https://railway.app) and sign in with GitHub
+   - Click **"New Project"** → **"Deploy from GitHub repo"**
+   - Select repository: `Mohitsagar236/ETRENA--BACKEND`
+   - Railway auto-detects Node.js project
+
+3. **Add Redis**
+   - Click **"+ New"** → **"Database"** → **"Add Redis"**
+   - Railway automatically sets `REDIS_URL`
+
+4. **Generate Domain**
+   - Go to **Settings** → **Networking** → **"Generate Domain"**
+   - Get your public URL (e.g., `https://your-app.railway.app`)
+
+5. **Done!** Your app is live 🎉
+
+**Option 2: Via Railway CLI**
+
+```powershell
+# Quick deploy using the automated script
+.\deploy-railway.ps1
+
+# Or manually:
+npm i -g @railway/cli
+railway login
+railway init
+railway add redis
+railway up
+railway domain
+```
+
+📖 **Full Railway Guide**: See [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) for detailed instructions
+
 ### Deploying to Render
 
-1. **Create `render.yaml`** (already included)
-2. **Push to GitHub**
-3. **Connect to Render**:
-   - Go to [Render Dashboard](https://dashboard.render.com)
-   - New → Web Service
-   - Connect repository
-   - Render auto-detects configuration
+1. **Create Account**: Go to [Render Dashboard](https://dashboard.render.com)
+2. **New Web Service**: Connect your GitHub repository
+3. **Auto-Detection**: Render uses `render.yaml` configuration
+4. **Add Redis**: Create Redis instance from dashboard
+5. **Deploy**: Render builds and deploys automatically
 
-### Deploying to Railway
+📖 **Configuration**: See `render.yaml` for settings
 
-1. **Install Railway CLI**
-   ```bash
-   npm i -g @railway/cli
-   ```
+### Deploying with Docker
 
-2. **Login and Deploy**
-   ```bash
-   railway login
-   railway init
-   railway up
-   ```
+```bash
+# Build and run locally
+docker-compose up -d
+
+# Or deploy to any Docker-compatible platform
+docker build -t meme-coin-aggregator .
+docker run -d -p 3000:3000 --env-file .env meme-coin-aggregator
+```
 
 ### Environment Variables (Production)
 
 Set these in your hosting platform:
 
-```
+```env
 NODE_ENV=production
 PORT=3000
 REDIS_URL=<your-redis-url>
 CACHE_TTL=30
 LOG_LEVEL=info
+WS_UPDATE_INTERVAL=5000
+DEXSCREENER_RATE_LIMIT=300
+JUPITER_RATE_LIMIT=600
+GECKOTERMINAL_RATE_LIMIT=300
 ```
+
+**Note**: Railway and Render provide `REDIS_URL` automatically when you add Redis service.
 
 ## 🎯 Design Decisions
 
